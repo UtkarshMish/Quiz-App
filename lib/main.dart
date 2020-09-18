@@ -1,6 +1,6 @@
 import 'package:Quiz/class/QuizQuestion.dart';
-import 'package:Quiz/util/answers.dart';
-import 'package:Quiz/util/questions.dart';
+import 'package:Quiz/util/questionContainer.dart';
+import 'package:Quiz/util/testCompletion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,16 +21,19 @@ class MyAppState extends State<MyApp> {
         ['Pichu Peru', "k2", "Mount Everest", "Someother"])
   ];
   int questionIndex = 0;
+  bool isCompleted = false;
   void answerQuestion() {
     setState(() {
-      if (questionIndex < questions.length - 1) questionIndex++;
+      if (questionIndex < questions.length - 1)
+        questionIndex++;
+      else if (questionIndex == questions.length - 1) isCompleted = true;
     });
-    print("answered Question");
   }
 
   void handleReset() {
     setState(() {
       questionIndex = 0;
+      isCompleted = false;
     });
   }
 
@@ -39,27 +42,20 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Quiz App"),
+          title: Text(
+            "Quiz",
+            style: TextStyle(fontSize: 27),
+          ),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Questions(questionIndex, questions[questionIndex].getQuestion),
-            ...questions[questionIndex].getAnswer.map((ans) => Answers(
-                  ans,
-                  handlePress: answerQuestion,
-                )),
-            RaisedButton(
-              onPressed: questionIndex != 0 ? handleReset : null,
-              child: Text("Reset"),
-              color: Colors.yellowAccent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60)),
-              disabledColor: Colors.grey[300],
-            )
-          ],
-        ),
-        backgroundColor: Colors.grey[300],
+        body: !isCompleted
+            ? questionContainer(
+                questionIndex: questionIndex,
+                questions: questions,
+                answerQuestion: answerQuestion,
+                handleReset: handleReset)
+            : testCompletion(handleReset: handleReset),
+        backgroundColor: Colors.grey[350],
       ),
     );
   }

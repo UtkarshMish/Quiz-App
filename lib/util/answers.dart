@@ -7,10 +7,12 @@ class Answers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(10),
       child: RaisedButton(
         onPressed: handlePress,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        color: Colors.grey[600],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        color: Colors.indigoAccent,
+        padding: EdgeInsets.all(15),
         child: Text(
           this.answerValue,
           style: TextStyle(color: Colors.white, fontSize: 20),

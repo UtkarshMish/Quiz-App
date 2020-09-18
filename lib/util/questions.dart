@@ -10,10 +10,13 @@ class Questions extends StatelessWidget {
       child: Text(
         "${this.questionNumber + 1}) ${this.questionValue} ?",
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.green[700], fontSize: 24),
+        style: TextStyle(
+            color: Colors.green[700],
+            fontSize: 28,
+            fontWeight: FontWeight.w700),
       ),
       width: 500,
-      margin: EdgeInsets.only(top: 100, bottom: 100),
+      margin: EdgeInsets.only(top: 100, bottom: 50),
     );
   }
 }
